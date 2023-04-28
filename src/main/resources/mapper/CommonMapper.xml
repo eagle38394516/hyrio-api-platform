@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.hyrio.CommonMapper">
+  <sql id="nullSafeEquals">
+    <choose>
+      <when test="${javaField} == null">
+        ISNULL(${databaseField})
+      </when>
+      <otherwise>
+        ${databaseField} = #{${javaField}}
+      </otherwise>
+    </choose>
+  </sql>
+
+  <resultMap id="count" type="int">
+    <result column="total"/>
+  </resultMap>
+
+  <sql id="pagerClause">
+    ${sqlLimit};
+    SELECT FOUND_ROWS() AS total;
+  </sql>
+
+  <sql id="orderClause">
+    <if test="orderParams != null">
+      ORDER BY
+      <foreach collection="orderParams" item="param" separator=", ">
+        ${param.field}
+        <if test="param.descending">
+          DESC
+        </if>
+      </foreach>
+    </if>
+  </sql>
+</mapper>

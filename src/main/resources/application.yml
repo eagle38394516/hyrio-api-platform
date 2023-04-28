@@ -1,0 +1,66 @@
+server:
+  port: 7071
+
+database:
+  host: localhost
+  username: root
+  password: root
+  port: 3306
+  name: api_platform
+
+logging:
+  file:
+    name: logs/api_platform.log
+  pattern:
+    dateformat: yyyy-MM-dd HH:mm:ss.SSS
+    file: '%d{yyyy-MM-dd HH:mm:ss.SSS} %5p --- [%15.15t] %-40.40logger{39} : %m%n'
+  level:
+    xyz.hyrio: DEBUG
+    xyz.hyrio.platform.mapper: INFO
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: xyz.hyrio.platform.pojo.po,xyz.hyrio.platform.pojo.bo
+  type-handlers-package: xyz.hyrio.common.typeHandler
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${database.host}:${database.port}/${database.name}?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true
+    username: ${database.username}
+    password: ${database.password}
+  jackson:
+    default-property-inclusion: non_null
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+
+swagger:
+  enabled: true
+  title: API Platform 后端接口
+  description: ${swagger.title}
+  version: 1.0.0
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+    enabled: ${swagger.enabled}
+  api-docs:
+    path: /v3/api-docs
+    enabled: ${swagger.enabled}
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/api/v1/**'
+      packages-to-scan: xyz.hyrio.mh.controller
+knife4j:
+  enable: ${swagger.enabled}
+  setting:
+    language: zh_cn
+    enable-swagger-models: false
+
+platform:
+  encryption-key: 8/jUYKZUCGav+55Ci/ub8jE5l6GCGBy4lCZD+Xdt8Ts=
+  token-prefix: APIPLATFORMTOKEN
