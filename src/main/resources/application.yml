@@ -62,5 +62,5 @@ knife4j:
     enable-swagger-models: false
 
 platform:
-  encryption-key: 8/jUYKZUCGav+55Ci/ub8jE5l6GCGBy4lCZD+Xdt8Ts=
+  encryption-key: n/zfET/iLpEUs8+38Bq/5fd5Rc2dscYgL91j0BqNbh8=
   token-prefix: APIPLATFORMTOKEN
